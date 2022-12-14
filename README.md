@@ -14,6 +14,7 @@
 
 ##### Registered commands
 - most-used-word
+- best-description-sentiment
 
 ##### Examples
 `php app/console/run.php most-used-word`
