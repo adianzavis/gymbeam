@@ -2,13 +2,17 @@
 
 namespace App\Core\Product;
 
+use App\Core\TextSentiment\DescriptionSentimentService;
+
 class ProductDescriptionService {
     private MostUsedWordBusiness $business;
     private ProductList $productList;
+    private DescriptionSentimentService $descriptionSentimentService;
 
     public function __construct() {
         $this->business = new MostUsedWordBusiness();
         $this->productList = new ProductList();
+        $this->descriptionSentimentService = new DescriptionSentimentService();
     }
 
     public function findMostUsedWord(): array {
@@ -31,5 +35,24 @@ class ProductDescriptionService {
 
     public function removeRedundantDescriptionCharacters(Product $product): Product {
         return $product->setDescription($this->business->formatDescriptionForAnalytics($product->getDescription()));
+    }
+
+    public function getBestDescriptionSentiment(): array {
+        $products = $this->productList->get();
+
+        $ratedProducts = array_reduce($products, function(array $rp, Product $product): array {
+            try {
+                $rating = $this->descriptionSentimentService->getTextRating($product->getDescription());
+                $rp[$product->getName()] = $rating;
+            } catch(\Throwable $e) {
+                echo $e->getMessage();
+                //Log or whatever;
+            }
+
+            return $rp;
+        }, []);
+
+        asort($ratedProducts);
+        return array_slice($ratedProducts, -10, 10, true);
     }
 }

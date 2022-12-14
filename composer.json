@@ -14,5 +14,7 @@
             "email": "adrian.zavis@anstudio.sk"
         }
     ],
-    "require": {}
+    "require": {
+        "guzzlehttp/guzzle": "^7.5"
+    }
 }

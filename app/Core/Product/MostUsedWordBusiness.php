@@ -22,14 +22,14 @@ class MostUsedWordBusiness {
     }
 
     public function formatDescriptionForAnalytics(string $description): string {
-        $description = $this->removeCommondWords($description);
+        $description = $this->removeCommonWords($description);
         $description = $this->removeMarks($description);
         $description = $this->removeNumbers($description);
         $description = $this->removeOneCharacterWords($description);
         return $this->removeWhiteSpaces($description);
     }
 
-    private function removeCommondWords(string $description): string {
+    private function removeCommonWords(string $description): string {
         $words = ['a', 'and', 'but', 'or', 'it', 'is', 'for', 'one', 'in', 'the', 'of', 'up', 'to', 'your', 'with', 'which', 'that', 'you', 'are', 'as', 'an', 'can', 'has', 'also', 'made', 'will', 'from', 'its', 'not', 'on', 'this', 'any'];
         $pattern = '/\b(?:' . join('|', $words) . ')\b/i';
         return preg_replace($pattern, '', $description);

@@ -2,8 +2,9 @@
 
 namespace App\Console;
 
-use App\Console\Commands\CommandInterface;
+use App\Console\Commands\BestDescriptionSentimentsCommand;
 use App\Console\Commands\MostUsedWordCommand;
+use App\Console\Commands\CommandInterface;
 
 class CommandProvider {
 
@@ -12,6 +13,7 @@ class CommandProvider {
      */
     private array $commands = [
         'most-used-word' => MostUsedWordCommand::class,
+        'best-description-sentiment' => BestDescriptionSentimentsCommand::class,
     ];
 
     public function getCommand(string $name): CommandInterface {
